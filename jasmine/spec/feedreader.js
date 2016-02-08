@@ -1,4 +1,4 @@
-/* feedreader.js *
+/* feedreader.js
  * This is the spec file that Jasmine will read and contains
  * all of the tests that will be run against your application.
  */
@@ -7,14 +7,15 @@
  * since some of these tests may require DOM elements. We want
  * to ensure they don't run until the DOM is ready.
  */
-$(function() {
 
-    /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+$(function() {	/* function wrapper */
 
-    describe('RSS Feeds Array', function() {
+/* This is our first test suite - a test suite just contains
+ * a related set of tests. This suite is all about the RSS
+ * feeds definitions, the allFeeds variable in our application.
+ */
+
+describe('RSS Feeds Array', function() {
 
 	/* This is our first test - it tests to make sure that the
 	 * allFeeds variable has been defined and that it is not
@@ -53,10 +54,10 @@ $(function() {
 		}
 	});
 
-    });
+});
 
-    /* This suite tests menu functionality */
-    describe('The Menu', function() {
+/* This suite tests menu functionality */
+describe('The Menu', function() {
 
 	/* This test that ensures the menu element is
 	 * hidden by default. The <body> element has
@@ -64,8 +65,6 @@ $(function() {
 	 */
 
 	it('is hidden by default', function() {
-		// var elements = document.getElementsByClassName('menu-hidden');
-		// expect(elements.length).toBe(1);
 		expect($('.menu-hidden').length).toBe(1);
 	});
 
@@ -91,13 +90,12 @@ $(function() {
 		expect($('.menu-hidden').length).toBe(1);
 	});
 
-    });
+});
 
+/* This suite performs a rudimentary test of "Initial Entries" */
+describe('Initial Entry', function() {
 
-    /* This suite performs a rudimentary test of "Initial Entries" */
-    describe('Initial Entries', function() {
-
-	/* This test that ensures when the loadFeed
+	/* This test ensures that when the loadFeed
 	 * function is called and completes its work, there is at least
 	 * a single .entry element within the .feed container.
 	 */
@@ -106,21 +104,45 @@ $(function() {
 		loadFeed(0,done);
 	});
 
-	it('number at least one', function(done) {
+	it('of allFeeds[0] is loaded', function(done) {
+		expect($('.feed').children('.entry-link').children('.entry').length).toBeGreaterThan(0);
+		done();
+		// console.log($('.feed').children('.entry-link').children('.entry').children('h2')[0].innerHTML);
+	});
+
+});
+
+/* This suite tests that selecting a new feed changed page content
+ * Two different feeds are selected and the text of the first links
+ * of each feed are compared.
+ */
+
+describe('New Feed Selection', function() {
+
+	var feedIndex = 1;
+	var feeds = [];
+
+	beforeEach(function(done) {
+		loadFeed(feedIndex++, function() {
+			feeds.push( $('.feed').children('.entry-link').children('.entry').children('h2')[0]);
+			done();
+		})
+	});
+
+	it('allFeeds[1] is loaded', function(done) {
 		expect($('.feed').children('.entry-link').children('.entry').length).toBeGreaterThan(0);
 		done();
 	});
 
-    });
 
+	it('allFeeds[2] is loaded with different content than allFeeds[1]', function(done) {
+		expect($('.feed').children('.entry-link').children('.entry').length).toBeGreaterThan(0);
+		expect(feeds[0].innerHTML).not.toBe(feeds[1].innerHTML);
+		done();
+		// console.log(feeds[0].innerHTML);
+		// console.log(feeds[1].innerHTML);
+	});
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
-    describe('New Feed Selection', function() {
+});
 
-	/* TODO: Write a test that ensures when a new feed is loaded
-	 * by the loadFeed function that the content actually changes.
-	 * Remember, loadFeed() is asynchronous.
-	 */
-    });
-
-}());
+}());	/* function wrapper */
