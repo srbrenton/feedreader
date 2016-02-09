@@ -126,7 +126,7 @@ describe('New Feed Selection', function() {
 		loadFeed(feedIndex++, function() {
 			feeds.push( $('.feed').children('.entry-link').children('.entry').children('h2')[0]);
 			done();
-		})
+		});
 	});
 
 	it('allFeeds[1] is loaded', function(done) {
@@ -139,6 +139,7 @@ describe('New Feed Selection', function() {
 		expect($('.feed').children('.entry-link').children('.entry').length).toBeGreaterThan(0);
 		expect(feeds[0].innerHTML).not.toBe(feeds[1].innerHTML);
 		done();
+		loadFeed(0);
 		// console.log(feeds[0].innerHTML);
 		// console.log(feeds[1].innerHTML);
 	});
