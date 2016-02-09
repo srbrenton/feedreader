@@ -122,6 +122,7 @@ describe('New Feed Selection', function() {
 	var feedIndex = 1;
 	var feeds = [];
 
+	// save a copy of the link text for allFeeds[1] and allFeeds[2] in feeds[]
 	beforeEach(function(done) {
 		loadFeed(feedIndex++, function() {
 			feeds.push( $('.feed').children('.entry-link').children('.entry').children('h2')[0]);
@@ -139,6 +140,7 @@ describe('New Feed Selection', function() {
 		expect($('.feed').children('.entry-link').children('.entry').length).toBeGreaterThan(0);
 		expect(feeds[0].innerHTML).not.toBe(feeds[1].innerHTML);
 		done();
+		// return to the Udacity feed
 		loadFeed(0);
 		// console.log(feeds[0].innerHTML);
 		// console.log(feeds[1].innerHTML);
